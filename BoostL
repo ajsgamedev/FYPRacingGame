@@ -1,0 +1,13 @@
+using UnityEngine;
+using System.Collections;
+
+public class BoostL : MonoBehaviour {
+
+	public float speed = 1200;
+
+	void OnTriggerEnter (Collider other)
+	{
+		other.rigidbody.AddForce(Vector3.left * speed, ForceMode.Acceleration);
+	}
+	
+}
