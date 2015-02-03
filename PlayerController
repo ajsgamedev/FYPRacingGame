@@ -1,32 +1,28 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerContoller : MonoBehaviour {
 
 	public float speed;
-	public GUIText countText;
+	public GUIText itemText;
 	public GUIText winText;
 	public GUIText StopW;
 	private int count;
+	private int lapNum;
 	private Vector3 movementVector;
+	private int rItems;
+	private List<string> items = new List<string>();
 
-	//protected Stopwatch timer = new Stopwatch();
-	//protected TimeSpan time = null;
 
 	void Start()
 	{
+		AddItems ();
 		count = 0;
 		SetCountText ();
 		winText.text="";
 		gameObject.renderer.material.color = Color.yellow;
 		renderer.material.color = Color.green;
-		if(gameObject.name.Equals("PickUp1"))
-		{
-			gameObject.renderer.material.color = Color.green;
-		}
-
-			//gameObject.
-		//timer.Start();
 		StopW.text = "";
 		
 	}
@@ -48,11 +44,37 @@ public class PlayerContoller : MonoBehaviour {
 	{
 		if (other.gameObject.tag == "PickUp") 
 		{
-
 			other.gameObject.SetActive(false);
-			count = count + 1;	
-			countText.text = "Count: " + count.ToString ();
+			rItems = Random.Range(0,4);
+			SetCountText();
 		}
+
+		if (other.gameObject.tag == "CheckP") 
+		{
+			count++;
+
+			if(count == 2)
+			{
+				lapNum++;
+				other.gameObject.SetActive(true);
+			}
+
+		}
+
+	}
+
+	void SetCountText()
+	{
+		string r = items[rItems];
+		itemText.text = r;
+
+		if(count==2)
+		{
+			winText.text = "Lap" + lapNum;
+			StopwatchEnd();
+		}
+
+
 
 	}
 
@@ -62,5 +84,13 @@ public class PlayerContoller : MonoBehaviour {
 		//timer = time.Elapsed();
 		StopW.text = timer.ToString() + " seconds!";
 
+	}
+
+	void AddItems()
+	{
+		items.Add ("Paper Ball");
+		items.Add ("Coffee");
+		items.Add ("Energy Drink");
+		items.Add ("Projects");
 	}
 }
