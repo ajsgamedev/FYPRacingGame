@@ -1,0 +1,18 @@
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
+[RequireComponent(typeof(lapCount))]
+public class carLap : MonoBehaviour {
+	
+	public List<Transform> lapCheckPointList = new List<Transform>();
+	public static int lapNum = 0;
+	public static int lapCheckPointNum = 0;
+	public static Vector3 startPos;
+
+	void Awake() 
+	{
+		startPos = transform.position;
+	}
+	
+}
