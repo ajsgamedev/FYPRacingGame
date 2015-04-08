@@ -1,0 +1,75 @@
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.UI;
+
+public class PickupController : MonoBehaviour
+{
+	private int pickUpSet;
+	private int count = 0;
+	private int pickUpList;
+	public Text counter;
+	public GameObject set1;
+	public GameObject set2;
+	public GameObject set3;
+	public GameObject set4;
+
+	public AudioClip hit;
+	
+	void Start ()
+	{
+		count = 0;
+		counter = counter.GetComponent<Text> ();
+		itemSetSelect (set1,set2);
+		pickUpList = GameObject.FindGameObjectsWithTag("PickUp").Length;
+		Debug.Log (pickUpList);
+	}
+	
+	// Update is called once per frame
+	void Update ()
+	{
+
+	}
+
+	public int Count
+	{
+		get
+		{
+			return count;
+		}
+	}
+
+	void OnTriggerEnter (Collider other)
+	{
+
+		if (other.gameObject.tag == "PickUp") {
+
+			other.gameObject.SetActive (false);
+			audio.PlayOneShot(hit,0.7f);
+			count+= 1;
+		}
+
+		counter.text = "Project Pages Collected: " + count;
+
+		if (count == pickUpList) {
+
+			itemSetSelect(set3,set4);
+
+		}
+	}
+	
+	void itemSetSelect (GameObject a, GameObject b)
+	{
+		pickUpSet = Random.Range (0, 2);
+		if (pickUpSet == 0) {
+				
+			a.SetActive (true);
+			b.SetActive (false);
+				
+		} else if (pickUpSet == 1) {
+				
+			a.SetActive (false);
+			b.SetActive (true);
+		} 
+	}
+}  
